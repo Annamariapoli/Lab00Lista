@@ -1,7 +1,6 @@
 package it.polit.tdp.parole00;
 
 import java.net.URL;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -15,8 +14,7 @@ import javafx.scene.control.TextField;
 
 public class Parole00Controller {
 	
-	private Model model;
-	Model elenco;
+	private Model model= new Model();
 	
 	public void setModel(Model model){
 		this.model= model;
@@ -47,26 +45,24 @@ public class Parole00Controller {
     }
 
     @FXML
-    void doInserisci(ActionEvent event) {               //suppongo possa inserire una parola per volta
-    	//txtArea.clear();
+    void doInserisci(ActionEvent event) {      
+         txtArea.clear();
     	String s = txtText.getText();
     	if(s.length()==0){                                        
     		txtArea.appendText("Inserisci la parola! \n");
     		txtText.clear();
     		return;
     	}
-    	
     	for(int i =0; i<s.length(); i++){	
            if(!Character.isLetter(s.charAt(i))){                
-	    	        txtArea.appendText("Il testo non è corretto! \n ");
-	    	         return;
-	    	        }
-    		    }
-    	
-          elenco.addParola(s);                                       //non è una stringa ma una parola
-    	  txtArea.appendText("la parola inserita è : "+ s+ "\n");
-     //   List<String> paroleInserite = parola.getElenco();
-    //	txtArea.appendText("le parole inserite precedentemente sono: "+paroleInserite+ " e la nuova parola è : "+s+ "\n");
+	    	   txtArea.appendText("Il testo non è corretto! \n ");
+	    	   return;
+	    	  }
+    	 }
+    
+         List<String> lista = model.getAggiungi(s);    
+         List<String> ordinata =  model.getListaOrdinata(lista);
+         txtArea.appendText(ordinata.toString());
     	
     }
 
@@ -77,7 +73,5 @@ public class Parole00Controller {
         assert txtArea != null : "fx:id=\"txtArea\" was not injected: check your FXML file 'Parole00Sample.fxml'.";
         assert btnCancella != null : "fx:id=\"btnCancella\" was not injected: check your FXML file 'Parole00Sample.fxml'.";
 
-        elenco = new Model();
-        
-    }
+     }
 }
